@@ -26,8 +26,11 @@ app.use('/api', cardRequestRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get('/', async (req, res) => {
-  res.send(`Card API is running`);
+  res.send(`Card APIs is running on this backend. Look up the links below:<br>
+  🔗 <a href="https://coreinfra-backend-sub.onrender.com/api-docs" target="_blank">API Documentation</a><br>
+  🔗 <a href="https://coreinfra-backend-sub.onrender.com" target="_blank">Live Demo: https://coreinfra-backend-sub.onrender.com</a>`);
 });
+
 
 const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {

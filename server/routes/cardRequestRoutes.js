@@ -5,7 +5,7 @@ const router = express.Router();
 const { authMiddleware } = require('../middlewares/authMiddleware');
 
 // Import controllers
-const { createCardRequest, getAllCardRequests, updateCardRequestStatus, deleteCardRequest } = require('../controllers/CardRequestController');
+const { createCardRequest, getAllCardRequests, updateCardRequestStatus, deleteCardRequest, updateCardRequest } = require('../controllers/CardRequestController');
 
 
 // CREATE CARD REQUEST
@@ -154,7 +154,7 @@ router.get('/card-requests', authMiddleware, getAllCardRequests);
 // SEE CARD REQUEST STATUS
 /**
  * @swagger
- * /api/card-requests/{id}:
+ * /api/update-status/card-request/{id}:
  *   patch:
  *     summary: Update the status of a card request
  *     description: Allows updating the status of a card request Following a predefined sequence. i.e you can't jump from a pending to dispatch. Has to follow the flow. Only admins can update.
@@ -191,7 +191,119 @@ router.get('/card-requests', authMiddleware, getAllCardRequests);
  *       500:
  *         description: Internal server error
  */
-router.patch('/card-requests/:id', authMiddleware, updateCardRequestStatus);
+router.patch('/update-status/card-request/:id', authMiddleware, updateCardRequestStatus);
+
+
+// UPDATE A CARD REQUEST FIELD
+/**
+ * @swagger
+ * /api/update/card-request/{id}:
+ *   patch:
+ *     summary: Update a card request (excluding status)
+ *     description: Dynamically update any field in a card request **except the status field**.
+ *     tags:
+ *       - Card Requests
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the card request to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               branch_name:
+ *                 type: string
+ *                 example: "Main Branch"
+ *               card_type:
+ *                 type: string
+ *                 example: "Visa"
+ *               quantity:
+ *                 type: integer
+ *                 example: 100
+ *               card_charges:
+ *                 type: number
+ *                 example: 150.50
+ *               batch:
+ *                 type: string
+ *                 example: "Batch A"
+ *             additionalProperties: false
+ *     responses:
+ *       200:
+ *         description: Card request updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Card request updated successfully"
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: "12345"
+ *                     branch_name:
+ *                       type: string
+ *                       example: "Main Branch"
+ *                     card_type:
+ *                       type: string
+ *                       example: "Visa"
+ *                     quantity:
+ *                       type: integer
+ *                       example: 100
+ *                     initiator:
+ *                       type: string
+ *                       example: "user123"
+ *                     card_charges:
+ *                       type: number
+ *                       example: 150.50
+ *                     batch:
+ *                       type: string
+ *                       example: "Batch A"
+ *                     updated_at:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-02-21T12:34:56Z"
+ *       400:
+ *         description: Status update not allowed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Status cannot be updated using this endpoint"
+ *       404:
+ *         description: Card request not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Card request not found"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
+router.patch('/update/card-request/:id', authMiddleware, updateCardRequest)
 
 
 // DELETE A CARD REQUEST

@@ -6,6 +6,7 @@ const { registerUser, loginUser } = require('../controllers/authController');
 
 // Begin swagger documentation for each routes
 
+// CREATE USER
 /**
  * @swagger
  * /api/auth/register:
@@ -36,6 +37,8 @@ const { registerUser, loginUser } = require('../controllers/authController');
  */
 router.post('/register', registerUser);
 
+
+// LOGIN USER
 /**
  * @swagger
  * /api/auth/login:

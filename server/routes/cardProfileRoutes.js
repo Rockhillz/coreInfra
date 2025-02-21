@@ -12,7 +12,7 @@ const { createCardProfile, getAllCardProfiles, updateCardProfile, deleteCardProf
 // CREATE CARD Profile
 /**
  * @swagger
- * /api/create/card-profiles:
+ * /api/create/card-profile:
  *   post:
  *     summary: Create a new card profile
  *     description: Only admins can create a new card profile. The expiration is specified in months (2 months = 2). The `fees` field should be an array of objects containing details about different fees associated with the card profile.
@@ -78,7 +78,7 @@ const { createCardProfile, getAllCardProfiles, updateCardProfile, deleteCardProf
  *       500:
  *         description: Internal server error
  */
-router.post('/create/card-profiles', authMiddleware, createCardProfile);
+router.post('/create/card-profile', authMiddleware, createCardProfile);
 
 
 // FETCH ALL CARD PROFILES

@@ -26,8 +26,7 @@ app.use('/api', cardRequestRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get('/', async (req, res) => {
-  const result = await pool.query('SELECT NOW()');
-  res.send(`Card API is running...Database time: ${result.rows[0].now}`);
+  res.send(`Card API is running`);
 });
 
 const PORT = process.env.PORT || 7000;
